@@ -1,0 +1,3 @@
+# Tunables for user-service (token lifetime = 24h)
+jwt:
+  expiration-ms: 86400000

@@ -1,0 +1,9 @@
+# Shared by every service that imports its config from this server.
+# Anything set here is overridden by environment variables.
+management:
+  endpoint:
+    health:
+      show-details: never
+
+bookhive:
+  platform: bookhive-microservices

@@ -1,0 +1,6 @@
+# Tunables for club-service
+bookhive:
+  cache:
+    ttl-minutes: 10          # how long the book catalog stays in Redis
+  circuit-breaker:
+    timeout-ms: 4000         # max wait for user-service before falling back

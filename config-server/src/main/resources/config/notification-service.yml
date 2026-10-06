@@ -1,0 +1,4 @@
+# Tunables for notification-service
+bookhive:
+  kafka:
+    notifications-topic: notifications

@@ -1,0 +1,68 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  application:
+    name: club-service
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}"
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/clubdb}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6380}
+      timeout: 1500ms
+      connect-timeout: 1500ms
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 2000
+            read-timeout: 3000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+jwt:
+  secret: ${JWT_SECRET:bookhive-dev-secret-change-me-in-production-0123456789}
+
+google:
+  books:
+    api:
+      key: ${GOOGLE_BOOKS_API_KEY:}
+
+bookhive:
+  cache:
+    ttl-minutes: 10
+  kafka:
+    notifications-topic: notifications
+  circuit-breaker:
+    timeout-ms: 4000
+  clients:
+    user-service:
+      # Leave empty to discover user-service through Eureka. Set (e.g. http://localhost:8081) to bypass discovery.
+      url: ${USER_SERVICE_URL:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

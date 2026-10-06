@@ -1,0 +1,45 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  application:
+    name: user-service
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}"
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/userdb}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+jwt:
+  # Same secret in every service. Override with the JWT_SECRET environment variable (min 32 chars).
+  secret: ${JWT_SECRET:bookhive-dev-secret-change-me-in-production-0123456789}
+  expiration-ms: 86400000
+
+bookhive:
+  admin:
+    # An admin account is created on first start if none exists. Leave email empty to disable.
+    email: ${ADMIN_EMAIL:admin@bookhive.local}
+    password: ${ADMIN_PASSWORD:Admin@12345}
+    name: ${ADMIN_NAME:BookHive Admin}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
